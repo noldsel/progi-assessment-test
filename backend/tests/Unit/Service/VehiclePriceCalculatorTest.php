@@ -1,8 +1,6 @@
 <?php 
 
-// tests/Service/VehiclePriceCalculatorTest.php
-
-namespace App\Tests\Service;
+namespace App\Tests\Unit\Service;
 
 use App\Service\VehiclePriceCalculator;
 use App\Service\Fee\BasicBuyerFeeCalculator;
