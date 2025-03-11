@@ -13,24 +13,37 @@
           v-model="vehicleType"
           :items="vehicleTypes"
           label="Vehicle Type"
-          @input="calculateTotal"
+          @update:model-value="calculateTotal"
         ></v-select>
   
-        <v-btn @click="calculateTotal">Calculate</v-btn>
+        <!-- <v-btn @click="calculateTotal">Calculate</v-btn> -->
   
         <v-divider></v-divider>
   
-        <div v-if="result">
-          <v-row>
-            <v-col>
-              <p><strong>Basic Buyer Fee:</strong> ${{ result.fees.basic_buyer_fee }}</p>
-              <p><strong>Special Fee:</strong> ${{ result.fees.special_fee }}</p>
-              <p><strong>Association Fee:</strong> ${{ result.fees.association_fee }}</p>
-              <p><strong>Storage Fee:</strong> ${{ result.fees.storage_fee }}</p>
-              <p><strong>Total Cost:</strong> ${{ result.total_cost }}</p>
-            </v-col>
-          </v-row>
-        </div>
+        <v-table v-if="result">
+        <thead>
+          <tr>
+            <th>Vehicle Price</th>
+            <th>Vehicle Type</th>
+            <th>Basic Fee</th>
+            <th>Special Fee</th>
+            <th>Association Fee</th>
+            <th>Storage Fee</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>${{ vehiclePrice }}</td>
+            <td>{{ vehicleType }}</td>
+            <td>${{ result.fees.basic_buyer_fee }}</td>
+            <td>${{ result.fees.special_fee }}</td>
+            <td>${{ result.fees.association_fee }}</td>
+            <td>${{ result.fees.storage_fee }}</td>
+            <td><strong>${{ result.total_cost }}</strong></td>
+          </tr>
+        </tbody>
+      </v-table>
       </v-form>
     </v-container>
   </template>
@@ -43,10 +56,14 @@
   
   const vehiclePrice = ref(0);
   const vehicleType = ref('Common');
-  const vehicleTypes = ['Common', 'Luxury'];
+  // NOTE: I would have prefered these values to be retrieved 
+  // from the database at the backend, but I don't have time to implement it
+  const vehicleTypes = ['Common', 'Luxury']; 
   const result = ref(null);
   
   const calculateTotal = async () => {
+
+    // console.log('calculate total')
     if (vehiclePrice.value <= 0) return;
   
     try {
