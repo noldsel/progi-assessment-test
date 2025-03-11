@@ -7,7 +7,7 @@ use App\Service\Fee\FeeCalculatorInterface;
 
 class VehiclePriceCalculator
 {
-    public function __construct(private array $feeCalculators, private float $storageFee = 100)
+    public function __construct(private array $feeCalculators, private float $storageFee = 100.00)
     {
     }
 
