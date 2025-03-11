@@ -10,42 +10,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VehiclePriceController extends AbstractController
 {
-    private $calculator;
+    
 
-    public function __construct(VehiclePriceCalculator $calculator)
-    {
-        $this->calculator = $calculator;
-    }
+    public function __construct(private VehiclePriceCalculator $calculator) {}
 
-    /**
-     * @Route("/api/calculate-vehicle-price", methods={"POST"})
-     */
+    // NOTE: for some reasons, I could not get the annotation to work properly,
+    // so, i define the routes in config/routes.yaml instead
+    // I would have prefered to use annotation for better readability and maintanability
+
+    // /**
+    //  * @Route("/api/calculate-vehicle-price", methods={"POST"})
+    //  */
     public function calculate(Request $request): JsonResponse
     {
-        // die('sdfsdf');
         $data = json_decode($request->getContent(), true);
         
         $vehiclePrice = $data['vehicle_price'];
         $vehicleType = $data['vehicle_type'];
 
-        // Validate input
+        // NOTE: These validation should be using a proper request validator
+        // but in these coding challenge, I am more focused on implementing 
+        // best programming practices like DRY, SOLID, etc)
         if (!in_array($vehicleType, ['Common', 'Luxury'])) {
             return new JsonResponse(['error' => 'Invalid vehicle type'], 400);
         }
 
-        $totalCost = $this->calculator->calculateTotalCost($vehiclePrice, $vehicleType);
-        $basicBuyerFee = $this->calculator->calculateBasicBuyerFee($vehiclePrice, $vehicleType);
-        $specialFee = $this->calculator->calculateSpecialFee($vehiclePrice, $vehicleType);
-        $associationFee = $this->calculator->calculateAssociationFee($vehiclePrice);
+        $result = $this->calculator->calculateTotalCost($vehiclePrice, $vehicleType);
 
-        return new JsonResponse([
-            'total_cost' => $totalCost,
-            'fees' => [
-                'basic_buyer_fee' => $basicBuyerFee,
-                'special_fee' => $specialFee,
-                'association_fee' => $associationFee,
-                'storage_fee' => 100,
-            ],
-        ]);
+        return new JsonResponse($result);
     }
 }
