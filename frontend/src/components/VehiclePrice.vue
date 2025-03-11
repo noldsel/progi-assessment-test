@@ -6,14 +6,12 @@
           label="Vehicle Base Price"
           type="number"
           min="0"
-          @input="calculateTotal"
         ></v-text-field>
   
         <v-select
           v-model="vehicleType"
           :items="vehicleTypes"
           label="Vehicle Type"
-          @update:model-value="calculateTotal"
         ></v-select>
   
         <!-- <v-btn @click="calculateTotal">Calculate</v-btn> -->
@@ -49,13 +47,15 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import axios from '../plugins/axios';
+  import { debounce } from 'lodash';
 //   import { VTextField } from 'vuetify/lib';
 //   import { VTextField } from 'vuetify/lib/components/index.mjs';
   
   const vehiclePrice = ref(0);
-  const vehicleType = ref('Common');
+  const vehicleType = ref('Common'); // Default Vehicle Type
+
   // NOTE: I would have prefered these values to be retrieved 
   // from the database at the backend, but I don't have time to implement it
   const vehicleTypes = ['Common', 'Luxury']; 
@@ -77,4 +77,12 @@
       console.error('Error calculating vehicle price:', error);
     }
   };
+
+  // Debounce the function to delay execution by 2 seconds
+  // because we don't want excessive call to the endpoing 
+  // when typing at every digit of any number
+  const debouncedCalculateTotal = debounce(calculateTotal, 2000);
+
+  // Watch for changes in vehiclePrice or vehicleType
+  watch([vehiclePrice, vehicleType], debouncedCalculateTotal);
   </script>
