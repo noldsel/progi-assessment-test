@@ -9,3 +9,4 @@
 5. RUN `npm install`
 6. RUN `npm run dev`
 7. Load in browser: http://localhost:5173/
+8. To run unit test: `docker exec -it symfony_app ./vendor/bin/phpunit --testdox`
