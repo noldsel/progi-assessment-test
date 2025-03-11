@@ -15,6 +15,8 @@ class VehiclePriceCalculator
     {
         $fees = [];
 
+        // dd($this->feeCalculators);
+
         // the first 3 fees are dynamic, so we need to calculate them
         foreach ($this->feeCalculators as $calculator) {
             $feeName = $calculator->getFeeName();
@@ -23,6 +25,8 @@ class VehiclePriceCalculator
 
         // storage fee is fixed, no need to calculate
         $fees['storage_fee'] = $this->storageFee;
+
+        // var_dump($fees);
 
         return [
             'total_cost' => $vehiclePrice + array_sum($fees),
