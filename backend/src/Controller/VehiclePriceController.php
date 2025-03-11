@@ -17,6 +17,8 @@ class VehiclePriceController extends AbstractController
     // NOTE: for some reasons, I could not get the annotation to work properly,
     // so, i define the routes in config/routes.yaml instead
     // I would have prefered to use annotation for better readability and maintanability
+    // On the other hand, using config/routes.yaml gives you a better overview 
+    // of all the endpoints, specially if you application is huge
 
     // /**
     //  * @Route("/api/calculate-vehicle-price", methods={"POST"})
