@@ -1,0 +1,10 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+calculate_vehicle_price:
+  path: /api/calculate-vehicle-price
+  methods: POST
+  controller: App\Controller\VehiclePriceController::calculate
