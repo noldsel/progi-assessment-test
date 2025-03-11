@@ -50,8 +50,6 @@
   import { ref, watch } from 'vue';
   import axios from '../plugins/axios';
   import { debounce } from 'lodash';
-//   import { VTextField } from 'vuetify/lib';
-//   import { VTextField } from 'vuetify/lib/components/index.mjs';
   
   const vehiclePrice = ref(0);
   const vehicleType = ref('Common'); // Default Vehicle Type
@@ -63,7 +61,6 @@
   
   const calculateTotal = async () => {
 
-    // console.log('calculate total')
     if (vehiclePrice.value <= 0) return;
   
     try {

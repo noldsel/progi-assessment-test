@@ -2,7 +2,7 @@ import './assets/main.css'
 
 import { createApp } from 'vue';
 import App from './App.vue';
-// import Vuetify from 'vuetify';
+
 import 'vuetify/dist/vuetify.css';
 import { createVuetify } from 'vuetify';
 import * as components from "vuetify/components";
