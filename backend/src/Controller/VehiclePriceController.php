@@ -25,6 +25,8 @@ class VehiclePriceController extends AbstractController
     //  */
     public function calculate(Request $request): JsonResponse
     {
+        // NOTE: assume session is authenticated and authorized
+        
         $data = json_decode($request->getContent(), true);
         
         $vehiclePrice = $data['vehicle_price'];
